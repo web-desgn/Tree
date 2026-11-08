@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="az"><head><meta charset="utf-8"><title>Nələr öyrənmişəm</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f7d5b">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f6f5f1;--fg:#1d1d1b;--card:#fff;--line:#b9b6aa;--acc:#2f7d5b;--sel:#d98a1f;--star:#d4d2ca;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171917;--fg:#ecebe6;--card:#262926;--line:#555a52;--acc:#4fb98a;--sel:#f0a940;--star:#3b403b}}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+#st{position:absolute;inset:0;touch-action:none;overflow:hidden;background-image:radial-gradient(circle,var(--star) 0 1.2px,transparent 1.6px);background-size:24px 24px}
+#w{position:absolute;left:0;top:0;transform-origin:0 0}
+svg{position:absolute;left:0;top:0;overflow:visible;width:1px;height:1px}
+path{fill:none;stroke:var(--line);stroke-width:2}
+.n{position:absolute;transform:translate(-50%,-50%);background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-size:15px;white-space:nowrap;user-select:none;-webkit-user-select:none;cursor:grab;box-shadow:0 1px 4px #0002}
+.n.root{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700;font-size:18px;padding:12px 22px}
+.n.sel{border-color:var(--sel);box-shadow:0 0 0 3px #d98a1f55}
+#bar{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);display:flex;gap:8px;padding:10px;background:var(--card);border-top:1px solid var(--line);align-items:center;z-index:5}
+#bar input{flex:1;min-width:0;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+button{font-size:15px;padding:10px 12px;border:0;border-radius:10px;background:var(--acc);color:#fff;cursor:pointer}
+button.d{background:#c0453a}
+#z{position:fixed;right:10px;top:calc(66px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:8px;z-index:5}
+#z button{background:var(--card);color:var(--fg);border:1px solid var(--line);width:44px;font-size:20px}
+#h{position:fixed;left:12px;top:calc(70px + env(safe-area-inset-top,0px));font-size:13px;opacity:.7;z-index:4;max-width:60%}
+#tb{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);display:flex;gap:6px;padding:8px;align-items:center;z-index:6;background:var(--card);border-bottom:1px solid var(--line)}
+#tabs{display:flex;gap:6px;flex:1;overflow-x:auto;min-width:0}
+.tb{white-space:nowrap;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:8px 12px}
+.tb.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.ti{font-size:16px;padding:7px;border:1px solid var(--acc);border-radius:10px;background:var(--bg);color:var(--fg);width:150px}
+#pe,#pd{flex:none;padding:8px 10px}
+#ib{position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top,0px));display:none;align-items:center;gap:8px;padding:10px 12px;background:var(--acc);color:#fff;border-radius:12px;z-index:50;box-shadow:0 4px 14px #0005;font-size:15px}#ib span{flex:1}#ib button{background:#fff;color:#1d1d1b;padding:8px 12px}#ib button.x{background:transparent;color:#fff;padding:8px}
+</style></head><body>
+<div id="st"><div id="w"><svg id="sv"></svg></div></div>
+<div id="tb"><div id="tabs"></div><button id="pe" class="tb">✎</button><button id="pd" class="tb">🗑</button></div>
+<div id="h">Qutunu sürüşdür, toxun və redaktə et. Boş yeri sürüşdürüb gəz.</div>
+<div id="z"><button id="zi">+</button><button id="zo">−</button><button id="zr" style="font-size:14px">⌂</button></div>
+<div id="bar"><input id="in" placeholder="Qutu seç..." disabled><button id="ad" disabled>+ Budaq</button><button id="dl" class="d" disabled>Sil</button></div>
+<script>
+const K='agac_v1';
+const def=()=>[{id:'r',t:'Mən',x:0,y:0,p:null},
+{id:'a',t:'HTML / CSS',x:230,y:-110,p:'r'},{id:'b',t:'JavaScript',x:230,y:20,p:'r'},
+{id:'c',t:'n8n',x:-230,y:-90,p:'r'},{id:'d',t:'Telegram bot',x:-230,y:40,p:'r'},
+{id:'e',t:'Fiverr / Payoneer',x:0,y:-190,p:'r'},{id:'f',t:'Claude ilə işləmək',x:0,y:170,p:'r'}];
+const K2='agac_v2';
+let N,V={x:0,y:0,k:1},sel=null,P=null,cur=null,ren=false,delAsk=false;
+const emptyN=()=>[{id:'r',t:'Mən',x:0,y:0,p:null}];
+try{const s=localStorage.getItem(K2);if(s){const o=JSON.parse(s);P=o.pages;cur=o.cur}
+ else{const s1=localStorage.getItem(K);const n1=s1?JSON.parse(s1):null;P=[{id:'p1',name:'Nələr öyrənmişəm',nodes:Array.isArray(n1)&&n1.length?n1:def()}]}}catch(e){}
+if(!Array.isArray(P)||!P.length)P=[{id:'p1',name:'Nələr öyrənmişəm',nodes:def()}];
+if(!P.find(p=>p.id===cur))cur=P[0].id;
+const cp=()=>P.find(p=>p.id===cur);
+N=cp().nodes;
+const $=id=>document.getElementById(id),st=$('st'),w=$('w'),sv=$('sv'),inp=$('in');
+const save=()=>{try{cp().view=V;localStorage.setItem(K2,JSON.stringify({pages:P,cur}))}catch(e){}};
+const home=()=>{V={x:innerWidth/2,y:innerHeight/2-30,k:1};apply()};
+const apply=()=>{w.style.transform=`translate(${V.x}px,${V.y}px) scale(${V.k})`;st.style.backgroundPosition=`${V.x}px ${V.y}px`;st.style.backgroundSize=`${24*V.k}px ${24*V.k}px`};
+function render(){
+  w.querySelectorAll('.n').forEach(e=>e.remove());
+  let d='';
+  N.forEach(n=>{const p=N.find(q=>q.id===n.p);if(p){const mx=(p.x+n.x)/2;d+=`<path d="M${p.x} ${p.y}C${mx} ${p.y} ${mx} ${n.y} ${n.x} ${n.y}"/>`}});
+  sv.innerHTML=d;
+  N.forEach(n=>{const e=document.createElement('div');e.className='n'+(n.p?'':' root')+(n.id===sel?' sel':'');
+    e.textContent=n.t||'...';e.style.left=n.x+'px';e.style.top=n.y+'px';e.dataset.id=n.id;w.appendChild(e)});
+  const s=N.find(n=>n.id===sel);
+  inp.disabled=!s;$('ad').disabled=!s;$('dl').disabled=!s||!s.p;
+  inp.value=s?s.t:'';if(!s)inp.placeholder='Qutu seç...';
+}
+let drag=null,pts=new Map(),pin=null;
+st.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.n');
+  drag={el:el&&el.dataset.id,sx:e.clientX,sy:e.clientY,ox:V.x,oy:V.y,moved:false};
+  if(drag.el){const n=N.find(q=>q.id===drag.el);drag.nx=n.x;drag.ny=n.y}
+  st.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size==2){const [a,b]=[...pts.values()];drag=null;pin={d0:Math.hypot(a.x-b.x,a.y-b.y)||1,k0:V.k,m0:{x:(a.x+b.x)/2,y:(a.y+b.y)/2},v0:{x:V.x,y:V.y}}}
+});
+st.addEventListener('pointermove',e=>{
+  if(pts.has(e.pointerId))pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pin&&pts.size==2){const [a,b]=[...pts.values()];const d=Math.hypot(a.x-b.x,a.y-b.y),m={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+    const k=Math.max(0.25,Math.min(3,pin.k0*d/pin.d0)),wx=(pin.m0.x-pin.v0.x)/pin.k0,wy=(pin.m0.y-pin.v0.y)/pin.k0;
+    V.k=k;V.x=m.x-wx*k;V.y=m.y-wy*k;apply();return}
+  if(!drag)return;
+  const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+  if(Math.abs(dx)+Math.abs(dy)>6)drag.moved=true;
+  if(!drag.moved)return;
+  if(drag.el){const n=N.find(q=>q.id===drag.el);n.x=drag.nx+dx/V.k;n.y=drag.ny+dy/V.k;render()}
+  else{V.x=drag.ox+dx;V.y=drag.oy+dy;apply()}
+});
+st.addEventListener('pointerup',e=>{
+  pts.delete(e.pointerId);
+  if(pin){if(pts.size<2){pin=null;drag=null}return}
+  if(!drag)return;
+  if(drag.el){if(!drag.moved){sel=drag.el;render()}else save()}
+  else if(!drag.moved){sel=null;render()}
+  drag=null;
+});
+function zoom(f){const cx=innerWidth/2,cy=innerHeight/2;V.x=cx-(cx-V.x)*f;V.y=cy-(cy-V.y)*f;V.k*=f;apply()}
+st.addEventListener('pointercancel',e=>{pts.delete(e.pointerId);pin=null;drag=null});
+$('zi').onclick=()=>zoom(1.25);$('zo').onclick=()=>zoom(0.8);$('zr').onclick=home;
+st.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY<0?1.1:0.9)},{passive:false});
+inp.addEventListener('input',()=>{const s=N.find(n=>n.id===sel);if(s){s.t=inp.value;
+  const el=w.querySelector(`.n[data-id="${sel}"]`);if(el)el.textContent=s.t||'...';save()}});
+$('ad').onclick=()=>{
+  const p=N.find(n=>n.id===sel);if(!p)return;
+  const c=N.filter(n=>n.p===p.id).length;let x,y;
+  if(!p.p){const a=c*0.9;x=p.x+240*Math.cos(a);y=p.y+240*Math.sin(a)}
+  else{const r=N.find(n=>!n.p),l=Math.hypot(p.x-r.x,p.y-r.y)||1,ux=(p.x-r.x)/l,uy=(p.y-r.y)/l;
+    const o=(c%2?1:-1)*Math.ceil(c/2)*55;x=p.x+ux*190-uy*o;y=p.y+uy*190+ux*o}
+  const id='n'+Date.now();N.push({id,t:'Yeni',x,y,p:p.id});sel=id;save();render();inp.focus();inp.select();
+};
+$('dl').onclick=()=>{
+  const s=N.find(n=>n.id===sel);if(!s||!s.p)return;
+  const kill=new Set([s.id]);let ch=true;
+  while(ch){ch=false;N.forEach(n=>{if(n.p&&kill.has(n.p)&&!kill.has(n.id)){kill.add(n.id);ch=true}})}
+  if(kill.size>1&&!confirm('Alt budaqlar da silinəcək. Davam?'))return;
+  N=cp().nodes=N.filter(n=>!kill.has(n.id));sel=null;save();render();
+};
+function goPage(id,skip){
+  if(!skip)cp().view={...V};
+  cur=id;N=cp().nodes;sel=null;ren=false;delAsk=false;
+  const v=cp().view;if(v){V={...v};apply()}else home();
+  render();renderTabs();save();
+}
+function addPage(){const id='p'+Date.now();cp().view={...V};P.push({id,name:'Yeni səhifə '+P.length,nodes:emptyN()});goPage(id,true)}
+function renderTabs(){
+  const t=$('tabs');t.innerHTML='';
+  P.forEach(p=>{
+    if(p.id===cur&&ren){const i=document.createElement('input');i.className='ti';i.value=p.name;
+      const fin=()=>{if(!ren)return;ren=false;p.name=i.value.trim()||p.name;save();renderTabs()};
+      i.onblur=fin;i.onkeydown=e=>{if(e.key==='Enter')i.blur()};t.appendChild(i);setTimeout(()=>{i.focus();i.select()},0);return}
+    const b=document.createElement('button');b.className='tb'+(p.id===cur?' on':'');b.textContent=p.name;
+    b.onclick=()=>{if(p.id!==cur)goPage(p.id)};t.appendChild(b);
+  });
+  const a=document.createElement('button');a.className='tb';a.textContent='+';a.onclick=addPage;t.appendChild(a);
+  $('pd').disabled=P.length<2;$('pd').textContent=delAsk?'Sil?':'🗑';
+}
+$('pe').onclick=()=>{ren=true;delAsk=false;renderTabs()};
+$('pd').onclick=()=>{
+  if(P.length<2)return;
+  if(!delAsk){delAsk=true;renderTabs();setTimeout(()=>{delAsk=false;renderTabs()},3000);return}
+  const i=P.findIndex(p=>p.id===cur);P.splice(i,1);goPage(P[Math.max(0,i-1)].id,true);
+};
+if(cp().view){V={...cp().view};apply()}else home();
+render();renderTabs();
+</script><div id="ib"><span>Bu səhifəni tətbiq kimi yüklə</span><button id="ibi">Yüklə</button><button class="x" id="ibx">✕</button></div>
+<script>
+(function(){var d=null,b=document.getElementById('ib');
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();d=e;b.style.display='flex'});
+document.getElementById('ibi').onclick=function(){if(!d)return;d.prompt();d.userChoice.finally(function(){d=null;b.style.display='none'})};
+document.getElementById('ibx').onclick=function(){b.style.display='none'};
+window.addEventListener('appinstalled',function(){b.style.display='none'});
+if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+})();
+</script></body></html>
